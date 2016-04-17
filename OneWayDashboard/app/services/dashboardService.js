@@ -25,15 +25,10 @@ System.register(['angular2/core', 'rxjs/Rx'], function(exports_1, context_1) {
                 function DashboardService() {
                     var _this = this;
                     this.dashboard = new Rx_1.BehaviorSubject(null);
+                    //Action streams
+                    this.dateRangeChange = new Rx_1.Subject();
                     this.update = function (value) {
                         _this._dashboard = value;
-                        _this.dashboard.next(_this._dashboard);
-                    };
-                    this.updateDateRange = function (startDate, endDate) {
-                        _this._dashboard.dateRange = {
-                            start: startDate,
-                            end: endDate
-                        };
                         _this.dashboard.next(_this._dashboard);
                     };
                     var widgets = [
@@ -59,6 +54,9 @@ System.register(['angular2/core', 'rxjs/Rx'], function(exports_1, context_1) {
                         widgets: widgets
                     };
                     this.dashboard.next(this._dashboard);
+                    this.dateRangeChange.subscribe(function (value) {
+                        _this._dashboard.dateRange = value;
+                    });
                 }
                 DashboardService = __decorate([
                     core_1.Injectable(), 

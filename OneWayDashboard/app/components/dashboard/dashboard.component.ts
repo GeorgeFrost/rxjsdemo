@@ -41,8 +41,15 @@ export class DashboardComponent {
     }
 
     ngAfterViewInit() {
-        this.dateRangeForm.controls['start'].valueChanges.subscribe((value: Date) => { this._dashboardService.updateDateRange(new Date(this.dateRange.start), new Date(this.dateRange.end)) });
-        this.dateRangeForm.controls['end'].valueChanges.subscribe((value: Date) => { this._dashboardService.updateDateRange(new Date(this.dateRange.start), new Date(this.dateRange.end)) });
+        this.dateRangeForm.controls['start'].valueChanges.subscribe(
+            (value: Date) => {
+                this._dashboardService.dateRangeChange.next({ start: new Date(this.dateRange.start), end: new Date(this.dateRange.end) }) 
+            });
+
+        this.dateRangeForm.controls['end'].valueChanges.subscribe(
+            (value: Date) => {
+                this._dashboardService.dateRangeChange.next({ start: new Date(this.dateRange.start), end: new Date(this.dateRange.end) })
+            });
     }
 
     private rowifyWidgets = (dashboard: IDashboard): void => {

@@ -61,8 +61,12 @@ System.register(['angular2/core', 'angular2/common', '../../services/dashboardSe
                 };
                 DashboardComponent.prototype.ngAfterViewInit = function () {
                     var _this = this;
-                    this.dateRangeForm.controls['start'].valueChanges.subscribe(function (value) { _this._dashboardService.updateDateRange(new Date(_this.dateRange.start), new Date(_this.dateRange.end)); });
-                    this.dateRangeForm.controls['end'].valueChanges.subscribe(function (value) { _this._dashboardService.updateDateRange(new Date(_this.dateRange.start), new Date(_this.dateRange.end)); });
+                    this.dateRangeForm.controls['start'].valueChanges.subscribe(function (value) {
+                        _this._dashboardService.dateRangeChange.next({ start: new Date(_this.dateRange.start), end: new Date(_this.dateRange.end) });
+                    });
+                    this.dateRangeForm.controls['end'].valueChanges.subscribe(function (value) {
+                        _this._dashboardService.dateRangeChange.next({ start: new Date(_this.dateRange.start), end: new Date(_this.dateRange.end) });
+                    });
                 };
                 DashboardComponent = __decorate([
                     core_1.Component({
