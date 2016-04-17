@@ -162,6 +162,9 @@ PublishScripts/
 *.nuget.props
 *.nuget.targets
 
+#typings
+**/typings/*
+
 # Microsoft Azure Build Output
 csx/
 *.build.csdef

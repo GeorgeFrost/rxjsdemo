@@ -1,34 +1,39 @@
 ﻿import {Injectable} from 'angular2/core';
+import {Subject, BehaviorSubject, Observable} from 'rxjs/Rx';
+
+import {IWidget, IDateRange, IDashboard} from '../models/dashboardModels';
 
 @Injectable()
 export class DashboardService {
-    dashboard: any;
+    private _dashboard: IDashboard;
+
+    dashboard: Subject<IDashboard> = new BehaviorSubject<IDashboard>(null);
 
     constructor() {
-        this.dashboard = {
+        var widgets: IWidget[] = [
+            {
+                id: 1,
+                title: "Two way binding is the future",
+                type: "image",
+                data: "barker.jpg"
+            },
+            {
+                id: 2,
+                title: "A text widget",
+                type: "text",
+                data: "Some Text"
+            }
+        ];
+
+        this._dashboard = {
             name: "Test",
             dateRange: {
                 start: null,
                 end: null
             },
-            widgets: [
-                {
-                    id: 1,
-                    title: "Two way binding is the future",
-                    type: "image",
-                    src: "barker.jpg"
-                },
-                {
-                    id: 2,
-                    title: "A text widget",
-                    type: "text",
-                    text: "Some Text"
-                }
-            ]
+            widgets: widgets
         };
-    }
 
-    get() {
-        return this.dashboard;
+        this.dashboard.next(this._dashboard);
     }
 }

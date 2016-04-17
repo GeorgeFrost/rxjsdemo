@@ -27,9 +27,13 @@ System.register(['angular2/core', '../../services/dashboardService'], function(e
                     this._dashboardService = dashboardService;
                 }
                 WidgetComponent.prototype.ngOnInit = function () {
+                    var _this = this;
                     var id = this.id;
-                    this.definition = _.find(this._dashboardService.get().widgets, function (widget) {
-                        return widget.id === id;
+                    this._dashboardService.dashboard
+                        .subscribe(function (dashboard) {
+                        _this.definition = _.find(dashboard.widgets, function (widget) {
+                            return widget.id === id;
+                        });
                     });
                 };
                 WidgetComponent = __decorate([

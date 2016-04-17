@@ -1,6 +1,9 @@
 ﻿import {Component} from 'angular2/core';
+import {Observable} from 'rxjs/Rx';
+
 import {DashboardService} from '../../services/dashboardService'
 import {WidgetComponent} from '../widget/widget.component'
+import {IDashboard} from '../../models/dashboardModels'
 
 @Component({
     selector: 'dashboard',
@@ -16,23 +19,27 @@ export class DashboardComponent {
     widgetRows: any;
 
     ngOnInit() {
-        this.dashboard = this._dashboardService.get();
+        this._dashboardService.dashboard
+            .subscribe(
+            (dashboard: IDashboard) => {
+                console.log(dashboard);
 
-        this.widgetRows = [];
+                this.dashboard = dashboard;
 
-        for (var i = 0; i < this.dashboard.widgets.length; i += 2) {
-            var row = [];
+                this.widgetRows = [];
 
-            row.push(this.dashboard.widgets[i]);
+                for (var i = 0; i < dashboard.widgets.length; i += 2) {
+                    var row = [];
 
-            if ((i + 1) <= this.dashboard.widgets.length) {
-                row.push(this.dashboard.widgets[i + 1]);
-            }
+                    row.push(dashboard.widgets[i]);
 
-            this.widgetRows.push(row);
-        }
+                    if ((i + 1) <= dashboard.widgets.length) {
+                        row.push(dashboard.widgets[i + 1]);
+                    }
 
-        console.log(this.widgetRows);
+                    this.widgetRows.push(row);
+                }
+            });
     }
 
     constructor(dashboardService: DashboardService) {

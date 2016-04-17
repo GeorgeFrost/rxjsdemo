@@ -296,6 +296,7 @@
     <TypeScriptCompile Include="app\components\dashboard\dashboard.component.ts" />
     <TypeScriptCompile Include="app\components\widget\widget.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\models\dashboardModels.ts" />
     <TypeScriptCompile Include="app\services\dashboardService.ts" />
   </ItemGroup>
   <ItemGroup>

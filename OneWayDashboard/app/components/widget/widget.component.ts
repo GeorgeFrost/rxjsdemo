@@ -1,8 +1,10 @@
 ﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
 
 import {Component} from 'angular2/core';
+import {Observable} from 'rxjs/Rx';
 
 import {DashboardService} from '../../services/dashboardService'
+import {IDashboard} from '../../models/dashboardModels'
 
 @Component({
     selector: 'widget',
@@ -24,8 +26,12 @@ export class WidgetComponent {
     ngOnInit() {
         var id = this.id;
 
-        this.definition = _.find(this._dashboardService.get().widgets, (widget: any) => {
-            return widget.id === id;
-        });
+        this._dashboardService.dashboard
+            .subscribe(
+            (dashboard: IDashboard) => {
+                this.definition = _.find(dashboard.widgets, (widget: any) => {
+                    return widget.id === id;
+                });
+            });
     }
 }

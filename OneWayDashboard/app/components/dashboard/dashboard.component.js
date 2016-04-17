@@ -29,17 +29,21 @@ System.register(['angular2/core', '../../services/dashboardService', '../widget/
                     this._dashboardService = dashboardService;
                 }
                 DashboardComponent.prototype.ngOnInit = function () {
-                    this.dashboard = this._dashboardService.get();
-                    this.widgetRows = [];
-                    for (var i = 0; i < this.dashboard.widgets.length; i += 2) {
-                        var row = [];
-                        row.push(this.dashboard.widgets[i]);
-                        if ((i + 1) <= this.dashboard.widgets.length) {
-                            row.push(this.dashboard.widgets[i + 1]);
+                    var _this = this;
+                    this._dashboardService.dashboard
+                        .subscribe(function (dashboard) {
+                        console.log(dashboard);
+                        _this.dashboard = dashboard;
+                        _this.widgetRows = [];
+                        for (var i = 0; i < dashboard.widgets.length; i += 2) {
+                            var row = [];
+                            row.push(dashboard.widgets[i]);
+                            if ((i + 1) <= dashboard.widgets.length) {
+                                row.push(dashboard.widgets[i + 1]);
+                            }
+                            _this.widgetRows.push(row);
                         }
-                        this.widgetRows.push(row);
-                    }
-                    console.log(this.widgetRows);
+                    });
                 };
                 DashboardComponent = __decorate([
                     core_1.Component({
