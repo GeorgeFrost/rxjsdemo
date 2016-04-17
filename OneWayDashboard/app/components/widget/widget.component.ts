@@ -15,6 +15,7 @@ import {IDashboard} from '../../models/dashboardModels'
 
 export class WidgetComponent {
     definition: any;
+    dateRange: { start: string, end: string };
 
     private _dashboardService: DashboardService;
     private id;
@@ -29,6 +30,13 @@ export class WidgetComponent {
         this._dashboardService.dashboard
             .subscribe(
             (dashboard: IDashboard) => {
+                console.log("Dashboard change detected ", dashboard);
+
+                this.dateRange = {
+                    start: dashboard.dateRange.start == null ? null : moment(dashboard.dateRange.start).format("DD/MM/YYYY"),
+                    end: dashboard.dateRange.end == null ? null : moment(dashboard.dateRange.end).format("DD/MM/YYYY")
+                };
+
                 this.definition = _.find(dashboard.widgets, (widget: any) => {
                     return widget.id === id;
                 });

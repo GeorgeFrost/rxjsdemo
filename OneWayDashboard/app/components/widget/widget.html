@@ -1,4 +1,8 @@
 ﻿<div class="card-block">
+    <div class="alert alert-info">
+        Showing results from {{dateRange.start || 'the beginning of time'}} to {{dateRange.end || 'the end of time'}}
+    </div>
+
     <div class="row">
         <div class="col-md-8">
             <h4 class="card-title">{{definition.title}}</h4>
@@ -23,11 +27,11 @@
     </div>
     
     <p class="card-text">Type: {{definition.type}}</p>
-
+       
     <div *ngIf="definition.type === 'image'">
-        <img bind-src="definition.src" />
+        <img bind-src="definition.data" />
     </div>
     <div *ngIf="definition.type === 'text'">
-        <p>{{definition.text}}</p>
+        <p>{{definition.data}}</p>
     </div>
 </div>

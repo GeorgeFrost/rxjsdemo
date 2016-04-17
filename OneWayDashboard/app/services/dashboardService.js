@@ -23,13 +23,25 @@ System.register(['angular2/core', 'rxjs/Rx'], function(exports_1, context_1) {
         execute: function() {
             DashboardService = (function () {
                 function DashboardService() {
+                    var _this = this;
                     this.dashboard = new Rx_1.BehaviorSubject(null);
+                    this.update = function (value) {
+                        _this._dashboard = value;
+                        _this.dashboard.next(_this._dashboard);
+                    };
+                    this.updateDateRange = function (startDate, endDate) {
+                        _this._dashboard.dateRange = {
+                            start: startDate,
+                            end: endDate
+                        };
+                        _this.dashboard.next(_this._dashboard);
+                    };
                     var widgets = [
                         {
                             id: 1,
                             title: "Two way binding is the future",
                             type: "image",
-                            data: "barker.jpg"
+                            data: "remove" //https://avatars2.githubusercontent.com/u/2462701?v=3&s=460
                         },
                         {
                             id: 2,
@@ -41,7 +53,7 @@ System.register(['angular2/core', 'rxjs/Rx'], function(exports_1, context_1) {
                     this._dashboard = {
                         name: "Test",
                         dateRange: {
-                            start: null,
+                            start: new Date(2000, 1, 1),
                             end: null
                         },
                         widgets: widgets

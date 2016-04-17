@@ -23,7 +23,6 @@ System.register(['angular2/core', '../dashboard/dashboard.component'], function(
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
-                    console.log("Constructed");
                 }
                 AppComponent = __decorate([
                     core_1.Component({

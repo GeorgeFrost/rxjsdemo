@@ -31,6 +31,11 @@ System.register(['angular2/core', '../../services/dashboardService'], function(e
                     var id = this.id;
                     this._dashboardService.dashboard
                         .subscribe(function (dashboard) {
+                        console.log("Dashboard change detected ", dashboard);
+                        _this.dateRange = {
+                            start: dashboard.dateRange.start == null ? null : moment(dashboard.dateRange.start).format("DD/MM/YYYY"),
+                            end: dashboard.dateRange.end == null ? null : moment(dashboard.dateRange.end).format("DD/MM/YYYY")
+                        };
                         _this.definition = _.find(dashboard.widgets, function (widget) {
                             return widget.id === id;
                         });

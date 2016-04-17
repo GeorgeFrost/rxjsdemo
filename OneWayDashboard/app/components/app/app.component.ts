@@ -8,8 +8,4 @@ import {DashboardComponent} from '../dashboard/dashboard.component'
     directives: [DashboardComponent]
 })
 
-export class AppComponent {
-    constructor() {
-        console.log("Constructed");
-    }
-}
+export class AppComponent {}
