@@ -1,0 +1,33 @@
+﻿<div class="card-block">
+    <div class="row">
+        <div class="col-md-8">
+            <h4 class="card-title">{{definition.title}}</h4>
+        </div>
+        <div class="col-md-4">
+            <div class="dropdown closed" style="float: right; margin-top: -5px;">
+                <button class="btn btn-secondary dropdown-toggle chart-type-dropdown" type="button" id="chartType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="padding: 0.25rem 0.4rem">
+                    <i class="fa fa-cog" style="margin-left: 2px;"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="chartType">
+                    <li class="dropdown-item">
+                        <i class="fa fa-pie-chart"></i> Image
+                    </li>
+                    <li class="dropdown-item">
+                        <i class="fa fa-bar-chart"></i> Text
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    
+    <p class="card-text">Type: {{definition.type}}</p>
+
+    <div *ngIf="definition.type === 'image'">
+        <img bind-src="definition.src" />
+    </div>
+    <div *ngIf="definition.type === 'text'">
+        <p>{{definition.text}}</p>
+    </div>
+</div>

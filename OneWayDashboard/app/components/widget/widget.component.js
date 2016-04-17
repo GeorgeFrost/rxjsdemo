@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../dashboard/dashboard.component'], function(exports_1, context_1) {
+System.register(['angular2/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,33 +10,30 @@ System.register(['angular2/core', '../dashboard/dashboard.component'], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, dashboard_component_1;
-    var AppComponent;
+    var core_1;
+    var WidgetComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (dashboard_component_1_1) {
-                dashboard_component_1 = dashboard_component_1_1;
             }],
         execute: function() {
-            AppComponent = (function () {
-                function AppComponent() {
-                    console.log("Constructed");
+            WidgetComponent = (function () {
+                function WidgetComponent() {
                 }
-                AppComponent = __decorate([
+                WidgetComponent = __decorate([
                     core_1.Component({
-                        selector: 'app',
-                        templateUrl: 'app/components/app/app.html',
-                        directives: [dashboard_component_1.DashboardComponent]
+                        selector: 'widget',
+                        templateUrl: 'app/components/widget/widget.html',
+                        inputs: ['definition'],
+                        host: { 'class': 'card' }
                     }), 
                     __metadata('design:paramtypes', [])
-                ], AppComponent);
-                return AppComponent;
+                ], WidgetComponent);
+                return WidgetComponent;
             }());
-            exports_1("AppComponent", AppComponent);
+            exports_1("WidgetComponent", WidgetComponent);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=widget.component.js.map

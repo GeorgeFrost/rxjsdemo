@@ -1,0 +1,17 @@
+﻿<div class="card">
+    <div class="card-block">
+        <p class="card-text">Dashboard - {{dashboard.name}}</p>
+    </div>
+</div>
+
+<div class="card-deck-wrapper" >
+    <div class="card-deck dashboard-row" 
+         style="width: 100%" 
+         *ngFor="#row of widgetRows">
+            <widget [definition]="row[0]"></widget>
+
+            <widget *ngIf="row.length > 1"
+                    [definition]="row[1]">
+            </widget>
+    </div>
+</div>

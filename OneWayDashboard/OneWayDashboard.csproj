@@ -238,6 +238,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\components\app\app.html" />
+    <Content Include="app\components\dashboard\dashboard.html" />
+    <Content Include="app\components\widget\widget.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -289,7 +291,10 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\components\app\app.component.ts" />
+    <TypeScriptCompile Include="app\components\dashboard\dashboard.component.ts" />
+    <TypeScriptCompile Include="app\components\widget\widget.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\services\dashboardService.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
