@@ -23,9 +23,10 @@ namespace OneWayDashboard
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/angular2").Include(
                 "~/node_modules/es6-shim/es6-shim.js",
+                "~/node_modules/underscore/underscore.js",
                 "~/node_modules/systemjs/dist/system-polyfills.js",
                 "~/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js",
 

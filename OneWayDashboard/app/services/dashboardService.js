@@ -28,11 +28,13 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         },
                         widgets: [
                             {
+                                id: 1,
                                 title: "Two way binding is the future",
                                 type: "image",
                                 src: "barker.jpg"
                             },
                             {
+                                id: 2,
                                 title: "A text widget",
                                 type: "text",
                                 text: "Some Text"

@@ -8,10 +8,10 @@
     <div class="card-deck dashboard-row" 
          style="width: 100%" 
          *ngFor="#row of widgetRows">
-            <widget [definition]="row[0]"></widget>
+            <widget [id]="row[0].id"></widget>
 
             <widget *ngIf="row.length > 1"
-                    [definition]="row[1]">
+                    [id]="row[1].id">
             </widget>
     </div>
 </div>
