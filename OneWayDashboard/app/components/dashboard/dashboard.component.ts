@@ -28,6 +28,11 @@ export class DashboardComponent {
     dateRangeForm: ControlGroup;
 
     ngOnInit() {
+
+        this.dashboard = {
+            name: "nam", dateRange: { start: null, end: null }, widgets: []
+        };
+
         this._dashboardService.dashboard
             .subscribe(
             (dashboard: IDashboard) => {

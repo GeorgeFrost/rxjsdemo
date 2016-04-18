@@ -23,15 +23,15 @@ System.register(['angular2/core', '../../services/dashboardService'], function(e
             }],
         execute: function() {
             WidgetComponent = (function () {
-                function WidgetComponent(dashboardService) {
-                    this._dashboardService = dashboardService;
+                function WidgetComponent(_dashboardService, _el) {
+                    this._dashboardService = _dashboardService;
+                    this._el = _el;
                 }
                 WidgetComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     var id = this.id;
-                    this._dashboardService.dateRangeChange
+                    this._dashboardService.dashboard
                         .subscribe(function (dashboard) {
-                        console.log("Date range change detected ", dashboard);
                         _this.dateRange = {
                             start: dashboard.dateRange.start == null ? null : moment(dashboard.dateRange.start).format("DD/MM/YYYY"),
                             end: dashboard.dateRange.end == null ? null : moment(dashboard.dateRange.end).format("DD/MM/YYYY")
@@ -39,14 +39,12 @@ System.register(['angular2/core', '../../services/dashboardService'], function(e
                         _this.definition = _.find(dashboard.widgets, function (widget) {
                             return widget.id === id;
                         });
+                        _this._el.nativeElement.style.backgroundColor = _this.definition.colour;
                     });
-                    this._dashboardService.dashboard
-                        .subscribe(function (dashboard) {
-                        console.log("Dashboard change detected ", dashboard);
-                        _this.definition = _.find(dashboard.widgets, function (widget) {
-                            return widget.id === id;
-                        });
-                    });
+                };
+                WidgetComponent.prototype.changeColour = function (colour) {
+                    this.definition.colour = colour;
+                    this._dashboardService.updateWidget.next(this.definition);
                 };
                 WidgetComponent = __decorate([
                     core_1.Component({
@@ -55,7 +53,7 @@ System.register(['angular2/core', '../../services/dashboardService'], function(e
                         inputs: ['id'],
                         host: { 'class': 'card' }
                     }), 
-                    __metadata('design:paramtypes', [dashboardService_1.DashboardService])
+                    __metadata('design:paramtypes', [dashboardService_1.DashboardService, core_1.ElementRef])
                 ], WidgetComponent);
                 return WidgetComponent;
             }());

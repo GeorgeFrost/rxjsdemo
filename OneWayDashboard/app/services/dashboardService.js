@@ -11,7 +11,7 @@ System.register(['angular2/core', 'rxjs/Rx'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, Rx_1;
-    var DashboardService;
+    var DashboardService, MockHttpService;
     return {
         setters:[
             function (core_1_1) {
@@ -24,39 +24,44 @@ System.register(['angular2/core', 'rxjs/Rx'], function(exports_1, context_1) {
             DashboardService = (function () {
                 function DashboardService() {
                     var _this = this;
-                    this.dashboard = new Rx_1.BehaviorSubject(null);
-                    //Action streams
+                    this.dashboardEvents = new Rx_1.Subject();
                     this.dateRangeChange = new Rx_1.Subject();
-                    this.update = function (value) {
-                        _this._dashboard = value;
-                        _this.dashboard.next(_this._dashboard);
+                    this.updateWidget = new Rx_1.Subject();
+                    this.saveDashboard = function (dashboard) {
+                        _this._dashboard = dashboard;
                     };
-                    var widgets = [
-                        {
-                            id: 1,
-                            title: "Two way binding is the future",
-                            type: "image",
-                            data: "remove" //https://avatars2.githubusercontent.com/u/2462701?v=3&s=460
-                        },
-                        {
-                            id: 2,
-                            title: "A text widget",
-                            type: "text",
-                            data: "Some Text"
-                        }
-                    ];
-                    this._dashboard = {
-                        name: "Test",
-                        dateRange: {
-                            start: new Date(2000, 1, 1),
-                            end: null
-                        },
-                        widgets: widgets
-                    };
-                    this.dashboard.next(this._dashboard);
-                    this.dateRangeChange.subscribe(function (value) {
-                        _this._dashboard.dateRange = value;
-                    });
+                    var dashboard = MockHttpService.GetDashboard();
+                    this.dashboard =
+                        this.dashboardEvents
+                            .scan(function (dashboard, operation) {
+                            console.log("An event has just happened to the dashboard", dashboard);
+                            return operation(dashboard);
+                        }, dashboard)
+                            .startWith(dashboard)
+                            .publishReplay(1)
+                            .refCount();
+                    this.dateRangeChange
+                        .map(function (newDateRange) {
+                        return function (dashboard) {
+                            dashboard.dateRange = newDateRange;
+                            return dashboard;
+                        };
+                    })
+                        .subscribe(this.dashboardEvents);
+                    this.updateWidget
+                        .map(function (newWidget) {
+                        return function (dashboard) {
+                            var newDashboard = dashboard;
+                            var newWidgets = _.map(newDashboard.widgets, function (widget) {
+                                if (widget.id === newWidget.id)
+                                    return newWidget;
+                                return widget;
+                            });
+                            newDashboard.widgets = newWidgets;
+                            return newDashboard;
+                        };
+                    })
+                        .subscribe(this.dashboardEvents);
                 }
                 DashboardService = __decorate([
                     core_1.Injectable(), 
@@ -65,6 +70,38 @@ System.register(['angular2/core', 'rxjs/Rx'], function(exports_1, context_1) {
                 return DashboardService;
             }());
             exports_1("DashboardService", DashboardService);
+            MockHttpService = (function () {
+                function MockHttpService() {
+                }
+                MockHttpService.GetDashboard = function () {
+                    var widgets = [
+                        {
+                            id: 1,
+                            title: "Two way binding is the future",
+                            type: "image",
+                            data: "https://avatars2.githubusercontent.com/u/2462701?v=3&s=460",
+                            colour: "#6ed3cf"
+                        },
+                        {
+                            id: 2,
+                            title: "A text widget",
+                            type: "text",
+                            data: "Some Text",
+                            colour: "#9068be"
+                        }
+                    ];
+                    var initialDashboard = {
+                        name: "Test",
+                        dateRange: {
+                            start: new Date(2000, 1, 1),
+                            end: null
+                        },
+                        widgets: widgets
+                    };
+                    return initialDashboard;
+                };
+                return MockHttpService;
+            }());
         }
     }
 });

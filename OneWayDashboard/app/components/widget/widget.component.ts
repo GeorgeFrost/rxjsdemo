@@ -1,10 +1,10 @@
 ﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
 
-import {Component} from 'angular2/core';
+import {Component, ElementRef} from 'angular2/core';
 import {Observable} from 'rxjs/Rx';
 
 import {DashboardService} from '../../services/dashboardService'
-import {IDashboard} from '../../models/dashboardModels'
+import {IDashboard, IWidget} from '../../models/dashboardModels'
 
 @Component({
     selector: 'widget',
@@ -14,24 +14,19 @@ import {IDashboard} from '../../models/dashboardModels'
 })
 
 export class WidgetComponent {
-    definition: any;
+    definition: IWidget;
     dateRange: { start: string, end: string };
-
-    private _dashboardService: DashboardService;
+    
     private id;
 
-    constructor(dashboardService: DashboardService) {
-        this._dashboardService = dashboardService;
-    }
+    constructor(private _dashboardService: DashboardService, private _el: ElementRef) { }
 
     ngOnInit() {
         var id = this.id;
-
-        this._dashboardService.dateRangeChange
+        
+        this._dashboardService.dashboard
             .subscribe(
             (dashboard: IDashboard) => {
-                console.log("Date range change detected ", dashboard);
-
                 this.dateRange = {
                     start: dashboard.dateRange.start == null ? null : moment(dashboard.dateRange.start).format("DD/MM/YYYY"),
                     end: dashboard.dateRange.end == null ? null : moment(dashboard.dateRange.end).format("DD/MM/YYYY")
@@ -40,16 +35,14 @@ export class WidgetComponent {
                 this.definition = _.find(dashboard.widgets, (widget: any) => {
                     return widget.id === id;
                 });
-            });
 
-        this._dashboardService.dashboard
-            .subscribe(
-            (dashboard: IDashboard) => {
-                console.log("Dashboard change detected ", dashboard);
-
-                this.definition = _.find(dashboard.widgets, (widget: any) => {
-                    return widget.id === id;
-                });
+                this._el.nativeElement.style.backgroundColor = this.definition.colour;
             });
+    }
+
+    changeColour(colour: string) {
+        this.definition.colour = colour;
+
+        this._dashboardService.updateWidget.next(this.definition);
     }
 }

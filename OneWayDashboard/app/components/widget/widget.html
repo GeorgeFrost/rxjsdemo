@@ -14,11 +14,11 @@
                     <i class="fa fa-cog" style="margin-left: 2px;"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="chartType">
-                    <li class="dropdown-item">
-                        <i class="fa fa-pie-chart"></i> Image
+                    <li class="dropdown-item" (click)="changeColour('#6ed3cf')">
+                        Blue
                     </li>
-                    <li class="dropdown-item">
-                        <i class="fa fa-bar-chart"></i> Text
+                    <li class="dropdown-item" (click)="changeColour('#9068be')">
+                        Purple
                     </li>
                 </ul>
             </div>

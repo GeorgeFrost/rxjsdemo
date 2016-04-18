@@ -51,6 +51,9 @@ System.register(['angular2/core', 'angular2/common', '../../services/dashboardSe
                 }
                 DashboardComponent.prototype.ngOnInit = function () {
                     var _this = this;
+                    this.dashboard = {
+                        name: "nam", dateRange: { start: null, end: null }, widgets: []
+                    };
                     this._dashboardService.dashboard
                         .subscribe(function (dashboard) {
                         _this.dashboard = dashboard;

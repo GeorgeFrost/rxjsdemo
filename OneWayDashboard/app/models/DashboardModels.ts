@@ -3,6 +3,7 @@
     title: string;
     type: string;
     data: any;
+    colour: string;
 }
 
 export interface IDateRange {
