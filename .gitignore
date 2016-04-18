@@ -164,6 +164,8 @@ PublishScripts/
 
 #typings
 **/typings/*
+**/*.js
+**/*.js.map
 
 # Microsoft Azure Build Output
 csx/
